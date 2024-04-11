@@ -1,6 +1,7 @@
 ﻿
 using Produto.Domain.Entities;
 using Produto.Domain.Interface;
+using Produto.Domain.ViewModels;
 using Produto.Service.Interface;
 
 namespace Produto.Service
@@ -18,22 +19,30 @@ namespace Produto.Service
             var produtolist = await _repository.GetProduto();
             return produtolist.OrderBy(t => t.Id);
         }
-        public async Task<ProdutoDomain> GetById(int id)
+        public async Task<ProdutoDomain> GetById(Guid id)
         {
             var resposta = await _repository.GetById(id);
             if (resposta == null) throw new Exception("Tarefa inexistente");
             return resposta;
         }
-        public ProdutoDomain AddProduto(ProdutoDomain produto)
+        public ProdutoDomain AddProduto(ProdutoViewModel produto)
         {
-            return _repository.AddProduto(produto);
+            ProdutoDomain produtoDomain = new ProdutoDomain
+            {
+                Id = Guid.NewGuid(),
+                Nome = produto.Nome,
+                Valor = produto.Valor,
+                QuantidadeEstoque = produto.QuantidadeEstoque,
+                DataCompra = produto.DataCompra
+            };
+            return _repository.AddProduto(produtoDomain);
         }
-        public ProdutoDomain UpdateProduto(int id, ProdutoDomain produto)
+        public ProdutoDomain UpdateProduto(Guid id, ProdutoDomain produto)
         {
             if (produto == null) throw new Exception("Tarefa inexistente");
             return _repository.UpdateProduto(id ,produto);
         }
-        public bool DeleteProduto(int id)
+        public bool DeleteProduto(Guid id)
         {
             var resposta = _repository.DeleteProduto(id);
             if (resposta == null || resposta == false) throw new Exception("Tarefa inexistente");

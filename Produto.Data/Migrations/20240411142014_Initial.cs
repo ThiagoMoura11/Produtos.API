@@ -13,8 +13,7 @@ namespace Produto.Data.Migrations
                 name: "Produto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Nome = table.Column<string>(type: "TEXT", nullable: false),
                     Valor = table.Column<decimal>(type: "TEXT", nullable: false),
                     QuantidadeEstoque = table.Column<int>(type: "INTEGER", nullable: false),

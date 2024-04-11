@@ -20,12 +20,20 @@ namespace Produto.Data.Repository
             return produto;
         }
 
-        public bool DeleteProduto(int id)
+        public bool DeleteProduto(Guid id)
         {
-            throw new NotImplementedException();
+            var produto = _context.Produto.Find(id);
+            if (produto == null)
+            {
+                return false;
+            }
+            _context.Produto.Remove(produto);
+            _context.SaveChanges();
+            return true;
         }
 
-        public Task<ProdutoDomain> GetById(int id)
+
+        public Task<ProdutoDomain> GetById(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -35,9 +43,20 @@ namespace Produto.Data.Repository
             return _context.Produto.ToList(); 
         }
 
-        public ProdutoDomain UpdateProduto(int id, ProdutoDomain produto)
+        public ProdutoDomain UpdateProduto(Guid id, ProdutoDomain produto)
         {
-            throw new NotImplementedException();
+            var produtoExistente = _context.Produto.Find(id);
+
+            if (produtoExistente != null)
+            {
+                _context.Entry(produtoExistente).CurrentValues.SetValues(produto);
+                _context.SaveChanges();
+                return produtoExistente;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

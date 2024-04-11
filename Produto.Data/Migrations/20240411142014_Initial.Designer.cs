@@ -11,7 +11,7 @@ using Produto.Data.Context;
 namespace Produto.Data.Migrations
 {
     [DbContext(typeof(ProdutoContext))]
-    [Migration("20240411111730_Initial")]
+    [Migration("20240411142014_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,9 @@ namespace Produto.Data.Migrations
 
             modelBuilder.Entity("Produto.Domain.Entities.ProdutoDomain", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("TEXT");

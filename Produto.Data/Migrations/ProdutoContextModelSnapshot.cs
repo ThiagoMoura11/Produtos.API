@@ -19,9 +19,9 @@ namespace Produto.Data.Migrations
 
             modelBuilder.Entity("Produto.Domain.Entities.ProdutoDomain", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("TEXT");

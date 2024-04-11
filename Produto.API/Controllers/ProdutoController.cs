@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Produto.Domain.Entities;
+using Produto.Domain.ViewModels;
 using Produto.Service.Interface;
 
 namespace Produto.API.Controllers
@@ -19,7 +20,7 @@ namespace Produto.API.Controllers
             => Ok(await _produtoService.GetProduto());
 
         [HttpGet("BuscarProduto/{id:int}")]
-        public async Task<ActionResult<ProdutoDomain>> GetProdutoById([FromRoute] int id)
+        public async Task<ActionResult<ProdutoDomain>> GetProdutoById([FromRoute] Guid id)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace Produto.API.Controllers
         }
 
         [HttpPost("AdicionarProduto")]
-        public ActionResult<ProdutoDomain> AddProduto([FromBody] ProdutoDomain Produto)
+        public ActionResult<ProdutoViewModel> AddProduto([FromBody] ProdutoViewModel Produto)
         {
             if (!ModelState.IsValid)
             {
@@ -42,11 +43,12 @@ namespace Produto.API.Controllers
                     Detail = "Os parametros fornecidos são invalidos"
                 });
             }
+            //Produto.Id = Guid.NewGuid();
             return Created("", _produtoService.AddProduto(Produto));
         }
 
         [HttpPut("AtualizarProduto{id:int}")]
-        public ActionResult<ProdutoDomain> UpdateProduto([FromRoute] int id, [FromBody] ProdutoDomain Produto)
+        public ActionResult<ProdutoDomain> UpdateProduto([FromRoute] Guid id, [FromBody] ProdutoDomain Produto)
         {
             try
             {
@@ -59,8 +61,8 @@ namespace Produto.API.Controllers
             }
         }
 
-        [HttpDelete("DeletarProduto/{id:int}")]
-        public ActionResult<bool> DeleteProdutoById([FromRoute] int id)
+        [HttpDelete("DeletarProduto/{id:Guid}")]
+        public ActionResult<bool> DeleteProdutoById([FromRoute] Guid id)
         {
             try
             {
