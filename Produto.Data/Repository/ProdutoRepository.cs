@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
 using Produto.Data.Context;
 using Produto.Domain.Entities;
 using Produto.Domain.Interface;
@@ -25,22 +26,23 @@ namespace Produto.Data.Repository
             var produto = _context.Produto.Find(id);
             if (produto == null)
             {
-                return false;
+                return false; 
             }
-            _context.Produto.Remove(produto);
-            _context.SaveChanges();
-            return true;
+
+            _context.Produto.Remove(produto); 
+            return true; 
         }
 
 
-        public Task<ProdutoDomain> GetById(Guid id)
+        public async Task<ProdutoDomain> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var produto = await _context.Produto.FirstOrDefaultAsync(p => p.Id == id);
+            return produto;
         }
 
         public async Task<IEnumerable<ProdutoDomain>> GetProduto()
         {
-            return _context.Produto.ToList(); 
+            return _context.Produto.ToList();
         }
 
         public ProdutoDomain UpdateProduto(Guid id, ProdutoDomain produto)

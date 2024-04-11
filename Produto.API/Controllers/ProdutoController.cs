@@ -19,7 +19,7 @@ namespace Produto.API.Controllers
         public async Task<ActionResult<IEnumerable<ProdutoDomain>>> GetProdutos()
             => Ok(await _produtoService.GetProduto());
 
-        [HttpGet("BuscarProduto/{id:int}")]
+        [HttpGet("BuscarProduto/{id:Guid}")]
         public async Task<ActionResult<ProdutoDomain>> GetProdutoById([FromRoute] Guid id)
         {
             try
@@ -47,7 +47,7 @@ namespace Produto.API.Controllers
             return Created("", _produtoService.AddProduto(Produto));
         }
 
-        [HttpPut("AtualizarProduto{id:int}")]
+        [HttpPut("AtualizarProduto{id:Guid}")]
         public ActionResult<ProdutoDomain> UpdateProduto([FromRoute] Guid id, [FromBody] ProdutoDomain Produto)
         {
             try
